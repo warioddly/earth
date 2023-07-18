@@ -34,7 +34,18 @@ class Engine {
         this._renderer.setPixelRatio( window.devicePixelRatio );
         this._renderer.setSize( window.innerWidth, window.innerHeight );
 
+
+        // let bgTexture = new THREE.TextureLoader().load("images/space.jpg");
+        // bgTexture.minFilter = THREE.maxFilter;
+        // this._scene.background = bgTexture;
+        
+
         this._controls = new OrbitControls(this._camera, this._renderer.domElement);
+
+        this._controls.enableDamping = true;
+        this._controls.dampingFactor = 0.05;
+        this._controls.minDistance = 0.550;
+        this._controls.maxDistance = 2;
 
         document.body.appendChild( this._renderer.domElement );
 
