@@ -10,14 +10,23 @@ export class Earth {
     constructor() {
 
         const geometry: THREE.SphereGeometry = new THREE.SphereGeometry( 0.5, 50, 50 );
-        const material = new THREE.MeshNormalMaterial({ color: 0x00ff00, wireframe: true });
+
+        const material = new THREE.MeshPhongMaterial({
+            map: new THREE.TextureLoader().load("images/8k_earth_daymap.jpg"),
+            bumpMap: new THREE.TextureLoader().load("images/elev_bump_8k.jpg"),
+            bumpScale: 0.005,
+            specularMap: new THREE.TextureLoader().load("images/water_8k.png"),
+            specular: new THREE.Color("blue"),
+            shininess: 10,
+        });
+
 
         this.earth = new THREE.Mesh( geometry, material );
 
     }
 
     public rotate(time) {
-        this.earth.rotation.y = time / 3000;
+        // this.earth.rotation.y = time / 3000;
     }
 
 

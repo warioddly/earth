@@ -9,11 +9,9 @@ export class Light {
 
     constructor() {
 
-        // red light
-        // this.light = new THREE.DirectionalLight( 0xff0000, 1 );
-        // white light
-        this.light = new THREE.DirectionalLight( 0xffffff, 1 );
-        this.light.position.set( 1, 1, 1 ).normalize();
+           this.light = new THREE.DirectionalLight( 0xffffff, 0.5 );
+           this.light.position.set( 0, 0, 1 );
+
 
     }
 

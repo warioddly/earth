@@ -6,7 +6,6 @@ import { Light } from './light';
 
 
 
-
 class Engine {
 
 
@@ -35,10 +34,38 @@ class Engine {
         this._renderer.setSize( window.innerWidth, window.innerHeight );
 
 
-        // let bgTexture = new THREE.TextureLoader().load("images/space.jpg");
-        // bgTexture.minFilter = THREE.maxFilter;
-        // this._scene.background = bgTexture;
-        
+        let bgTexture = new THREE.TextureLoader().load("images/space.jpg");
+        bgTexture.minFilter = THREE.maxFilter;
+        this._scene.background = bgTexture;
+
+
+        // add earth atmosphere with shader
+
+        const atmosphereGeometry = new THREE.SphereGeometry( 0.51, 50, 50 );
+           const atmosphereMaterial = new THREE.ShaderMaterial({
+                vertexShader: `
+                    varying vec3 vNormal;
+                    void main() {
+                        vNormal = normalize( normalMatrix * normal );
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+                    }
+                `,
+                fragmentShader: `
+                    varying vec3 vNormal;
+                    void main() {
+                        float intensity = pow( 0.9 - dot( vNormal, vec3( 0, 0, 1.0 ) ), 12.0 );
+                        gl_FragColor = vec4( 0.5, 0.5, 1.0, 1.0 ) * intensity;
+                    }
+                        `,
+                side: THREE.BackSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true
+
+           });
+
+              const atmosphere = new THREE.Mesh( atmosphereGeometry, atmosphereMaterial );
+                atmosphere.scale.set( 1.2, 1.2, 1.2 );
+                this._scene.add( atmosphere );
 
         this._controls = new OrbitControls(this._camera, this._renderer.domElement);
 
@@ -52,8 +79,6 @@ class Engine {
         window.addEventListener( 'resize', this._resize.bind(this) );
 
     }
-
-
 
 
     private _animation( time ) {
@@ -72,7 +97,6 @@ class Engine {
         this._camera.updateProjectionMatrix();
         this._renderer.setSize( window.innerWidth, window.innerHeight );
     }
-
 
 
 }
