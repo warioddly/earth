@@ -15,19 +15,16 @@ export class Earth {
             map: new THREE.TextureLoader().load("images/8k_earth_daymap.jpg"),
             bumpMap: new THREE.TextureLoader().load("images/elev_bump_8k.jpg"),
             bumpScale: 0.005,
-            specularMap: new THREE.TextureLoader().load("images/water_8k.png"),
-            specular: new THREE.Color("blue"),
+            specular: new THREE.Color("grey"),
             shininess: 10,
         });
-
 
         this.earth = new THREE.Mesh( geometry, material );
 
     }
 
     public rotate(time) {
-        // this.earth.rotation.y = time / 3000;
+        this.earth.rotation.y = time / 6000;
     }
-
 
 }
