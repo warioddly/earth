@@ -52,6 +52,14 @@ const config = {
                     filename: 'assets/images/[name][ext]',
                 },
             },
+
+            {
+                test: /\.(glsl|vs|fs|vert|frag)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'assets/shaders/[name][ext]',
+                },
+            },
         ],
     },
 };
