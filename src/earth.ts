@@ -77,7 +77,7 @@ export class Earth {
         this.bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 )
         this.bloomPass.threshold = 0.1
         this.bloomPass.strength = 0.5
-        this.bloomPass.radius = 3.3
+        this.bloomPass.radius = 0.1
         this.bloomPass.renderToScreen = true
 
         this.composer = new EffectComposer( renderer )
@@ -102,14 +102,7 @@ export class Earth {
         this.rotate(time);
         this.moveClouds(time);
 
-        this.earth.layers.set(1);
-        this.clouds.layers.set(1);
-
         this.composer.render();
-
-        this.earth.layers.set(0);
-        this.clouds.layers.set(0);
-
 
     }
 
