@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>3D Earth | WARIODDLY | IØ </title>
+    <meta name="author" content="WARIODDLY">
+    <meta name="description" content="Web audio visualizer based on the Three.js library. And the source code is written in TypeScript">
+    <meta name="keywords" content="WebGL, Three.js, TypeScript, Audio Visualizer, Web Audio API">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .author-info {
+            position: absolute;
+            top: auto;
+            bottom: 10px;
+            left: 10px;
+            height: auto;
+        }
+
+        .author-info p {
+            color: white;
+            font-size: 12px;
+        }
+
+        .author-info a {
+            color: white;
+        }
+
+        .author-info a:hover {
+            color: #356b8f;
+        }
+
+    </style>
+</head>
+<body>
+
+<script type="x-shader/x-vertex" id="vertexshader">
+
+    varying vec2 vUv;
+
+    void main() {
+
+        vUv = uv;
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+    }
+
+</script>
+
+    <div id="container"></div>
+
+    <div class="author-info">
+        <p>Author: <a href="https://github.com/warioddly" target="_blank">WARIODDLY</a></p>
+        <p>Source code: <a href="https://github.com/warioddly/3D-Earth-Globe" target="_blank">GitHub</a></p>
+    </div>
+
+</body>
+</html>
