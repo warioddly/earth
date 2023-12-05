@@ -23,7 +23,7 @@ class Engine {
         this._scene.background = new THREE.Color().setHSL( 0.51, 0.4, 0.01, THREE.SRGBColorSpace );
 
         this._camera = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 0.01, 100 );
-        // this._camera.position.z = 40;
+        this._camera.position.z = 1;
 
         this._renderer = new THREE.WebGLRenderer( { antialias: true, } );
         this._renderer.setPixelRatio( window.devicePixelRatio );
@@ -50,12 +50,12 @@ class Engine {
 
         window.addEventListener( 'resize', this._resize.bind(this) );
 
-        this._renderer.setAnimationLoop( this._animation.bind(this) );
+        this._renderer.setAnimationLoop( this._animate.bind(this) );
 
     }
 
 
-    private _animation( time: number ) {
+    private _animate( time: number ) {
 
         this._controls.update();
 
