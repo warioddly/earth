@@ -9,25 +9,29 @@ export class Earth {
 
     constructor(scene: THREE.Scene, camera: THREE.PerspectiveCamera) {
 
-        const cloudTexture = new THREE.TextureLoader().load( require('./assets/images/8k_earth_clouds.jpg') ),
-              earthTexture = new THREE.TextureLoader().load( require('./assets/images/8k_earth_daymap.jpg') ),
-              bumpTexture  = new THREE.TextureLoader().load( require('./assets/images/elev_bump_8k.jpg')    );
+        const cloudTexture = new THREE.TextureLoader().load( require('./assets/images/8k_earth_clouds.jpg')  ),
+              earthDayTexture = new THREE.TextureLoader().load( require('./assets/images/8k_earth_daymap.jpg') ),
+              earthNightTexture = new THREE.TextureLoader().load( require('./assets/images/8k_earth_nightmap.jpg') ),
+              bumpTexture  = new THREE.TextureLoader().load( require('./assets/images/8081_earthbump10k.jpg')),
+              earthSpecTexture = new THREE.TextureLoader().load( require('./assets/images/8081_earthspec10k.jpg'));
 
         const earthMaterial = new THREE.MeshPhongMaterial({
-            map: earthTexture,
             bumpMap: bumpTexture,
             bumpScale: 0.001,
-            color: 0xffffff,
-            shininess: 10,
-            specular: 0x808080,
+            map: earthDayTexture,
+            emissiveMap: earthNightTexture,
+            emissive: new THREE.Color(0x888888),
+            emissiveIntensity: 1,
+            specularMap: earthSpecTexture,
+            specular: 1,
+            shininess: 30,
         });
         const cloudsMaterial = new THREE.MeshPhongMaterial({
             map: cloudTexture,
             alphaMap : cloudTexture,
             transparent: true,
-            alphaTest: 0.001,
+            alphaTest: 0.0001,
             side: THREE.DoubleSide,
-            opacity: 1
         });
         const atmosphereMaterial = new THREE.ShaderMaterial({
             uniforms:
@@ -48,11 +52,9 @@ export class Earth {
         this.clouds = new THREE.Mesh( new THREE.SphereGeometry( 0.505, 60, 60 ), cloudsMaterial );
         this.atmosphere = new THREE.Mesh(new THREE.SphereGeometry( 0.511, 60, 60 ), atmosphereMaterial);
 
-
         scene.add( this.earth );
-        scene.add( this.clouds);
-        scene.add( this.atmosphere);
-
+        scene.add( this.clouds );
+        scene.add( this.atmosphere );
 
     }
 
