@@ -22,22 +22,22 @@ export class Sun {
         this.sun.position.set(1, 1, 1);
         this.sun.matrixAutoUpdate = false;
         this.sun.updateMatrix();
-        // scene.add(this.sun);
+        scene.add(this.sun);
 
 
-        const textureLoader = new THREE.TextureLoader();
-
-        const textureFlare0 = textureLoader.load( require("./assets/images/lensflare/lensflare0.png") );
-        const textureFlare1 = textureLoader.load( require("./assets/images/lensflare/lensflare2.png") );
-        const textureFlare2 = textureLoader.load( require("./assets/images/lensflare/lensflare3.png") );
-
-        for (let i = 0; i < 10; i++) {
-            scene.add( this.addLensFlare(
-                new THREE.Vector3(1, 1, 1),
-                120.5,
-                )
-            );
-        }
+        // const textureLoader = new THREE.TextureLoader();
+        //
+        // const textureFlare0 = textureLoader.load( require("./assets/images/lensflare/lensflare0.png") );
+        // const textureFlare1 = textureLoader.load( require("./assets/images/lensflare/lensflare2.png") );
+        // const textureFlare2 = textureLoader.load( require("./assets/images/lensflare/lensflare3.png") );
+        //
+        // for (let i = 0; i < 10; i++) {
+        //     scene.add( this.addLensFlare(
+        //         new THREE.Vector3(1, 1, 1),
+        //         120.5,
+        //         )
+        //     );
+        // }
 
     }
 
