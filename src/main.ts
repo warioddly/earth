@@ -28,7 +28,8 @@ class Engine {
         this._renderer = new THREE.WebGLRenderer( { antialias: true, } );
         this._renderer.setPixelRatio( window.devicePixelRatio );
         this._renderer.setSize( window.innerWidth, window.innerHeight );
-
+        this._renderer.xr.enabled = false;
+        this._renderer.shadowMap.autoUpdate = false;
 
         this._controls = new OrbitControls(this._camera, this._renderer.domElement);
         this._controls.enableDamping = true;
@@ -42,7 +43,7 @@ class Engine {
 
         this._scene.add(new Space());
         this._earth = new Earth(this._scene, this._camera);
-        this._sun = new Sun(this._scene);
+        // this._sun = new Sun(this._scene);
 
         // this._scene.position.set(0, -1, -1);
 

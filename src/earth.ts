@@ -8,7 +8,7 @@ export class Earth {
     public readonly clouds : THREE.Mesh;
     public readonly atmosphere : THREE.Mesh;
     private user;
-    private userRing;
+    // private userRing;
 
     constructor(scene: THREE.Scene, camera: THREE.PerspectiveCamera) {
 
@@ -38,8 +38,8 @@ export class Earth {
         });
         const atmosphereMaterial = new THREE.ShaderMaterial({
             uniforms: {
-                    "c":   { type: "f", value: 0.9 },
-                    "p":   { type: "f", value: 0.9 },
+                    "c":   { type: "f", value: 1 },
+                    "p":   { type: "f", value: 1 },
                     glowColor: { type: "c", value: new THREE.Color(0x00b3ff) },
                     viewVector: { type: "v3", value: camera.position }
                 },
@@ -47,7 +47,7 @@ export class Earth {
             fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
             side: THREE.FrontSide,
             blending: THREE.AdditiveBlending ,
-            transparent: true
+            transparent: true,
         });
 
         this.earth = new THREE.Mesh( new THREE.SphereGeometry( 0.5, 60, 60 ), earthMaterial );
@@ -94,37 +94,35 @@ export class Earth {
                     })
                 );
 
-                this.userRing = new THREE.Mesh(
-                    new THREE.RingGeometry(0, 1.9, 32),
-                    new THREE.MeshBasicMaterial({
-                        color: 0xdc2626,
-                        side: THREE.DoubleSide,
-                        blending: THREE.AdditiveBlending ,
-                        opacity: 0.5,
-                        transparent: true,
-                    })
-                );
-
-                this.userRing.scale.set(0.001, 0.001, 0.001);
-
-                this.user.lookAt(this.earth.position);
+                // this.userRing = new THREE.Mesh(
+                //     new THREE.RingGeometry(0, 1.9, 32),
+                //     new THREE.MeshBasicMaterial({
+                //         color: 0xdc2626,
+                //         side: THREE.DoubleSide,
+                //         blending: THREE.AdditiveBlending ,
+                //         opacity: 0.5,
+                //         transparent: true,
+                //     })
+                // );
+                //
+                // this.userRing.scale.set(0.001, 0.001, 0.001);
 
                 this.user.position.copy(surfacePosition).add(new THREE.Vector3(0, userRadius, 0));
 
 
-                new TWEEN.Tween(this.userRing.scale)
-                    .to(new THREE.Vector3(0.03, 0.03, 0.03))
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .repeat(Infinity)
-                    .start();
-
-                new TWEEN.Tween(this.userRing.material)
-                    .to({ opacity: 0 })
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .repeat(Infinity)
-                    .start();
-
-                this.user.add(this.userRing);
+                // new TWEEN.Tween(this.userRing.scale)
+                //     .to(new THREE.Vector3(0.03, 0.03, 0.03))
+                //     .easing(TWEEN.Easing.Quadratic.Out)
+                //     .repeat(Infinity)
+                //     .start();
+                //
+                // new TWEEN.Tween(this.userRing.material)
+                //     .to({ opacity: 0 })
+                //     .easing(TWEEN.Easing.Quadratic.Out)
+                //     .repeat(Infinity)
+                //     .start();
+                //
+                // this.user.add(this.userRing);
                 this.earth.add(this.user);
 
             });
@@ -132,14 +130,10 @@ export class Earth {
     }
 
 
-    private animateClouds(time: number) {
-        this.clouds.rotation.y = time * 0.00001;
-    }
-
     public animate(time: number) {
         this.earth.rotation.y = time * 0.00002;
-        this.animateClouds(time);
-        TWEEN.update();
+        this.clouds.rotation.y = time * 0.00001;
+        // TWEEN.update();
     }
 
 }
