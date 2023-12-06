@@ -12,7 +12,7 @@ export class Sun {
         const geometry: THREE.SphereGeometry = new THREE.SphereGeometry(0.5, 50, 50);
 
         const material = new THREE.MeshBasicMaterial({
-            map: new THREE.TextureLoader().load(require('./assets/images/8k_sun.jpg')),
+            // map: new THREE.TextureLoader().load(require('./assets/images/8k_sun.jpg')),
             side: THREE.FrontSide,
             color: 0xffffff,
         });
