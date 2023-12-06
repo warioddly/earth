@@ -14,9 +14,6 @@ const config = {
     },
     resolve: {
         extensions: ['.ts', '.js'],
-        alias: {
-            '@': path.resolve(__dirname, 'src'), // Add this alias for your src directory
-        },
     },
     devServer: {
         open: true,
@@ -27,13 +24,12 @@ const config = {
             template: 'index.html',
         }),
         new MiniCssExtractPlugin(),
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+
     ],
     module: {
         rules: [
             {
-                test: /\.(ts|tsx|js)$/i,
+                test: /\.(ts|js)$/i,
                 loader: 'ts-loader',
                 exclude: /node_modules/,
             },

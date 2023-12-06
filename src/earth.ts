@@ -1,6 +1,6 @@
 // @ts-ignore
 import * as THREE from 'three';
-import TWEEN from 'tweenjs/tween.js';
+import TWEEN from '@tweenjs/tween.js';
 
 export class Earth {
 
@@ -20,7 +20,7 @@ export class Earth {
 
         const earthMaterial = new THREE.MeshPhongMaterial({
             bumpMap: bumpTexture,
-            bumpScale: 0.001,
+            bumpScale: 0.003,
             map: earthDayTexture,
             emissiveMap: earthNightTexture,
             emissive: new THREE.Color(0x888888),
@@ -71,10 +71,11 @@ export class Earth {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         })
             .then((coordinates: any) => {
-                const { latitude, longitude } = coordinates.coords;
-                const phi = (90 - latitude) * (Math.PI / 180);
-                const theta = (longitude + 180) * (Math.PI / 180);
-                const earthRadius = this.earth.geometry.parameters.radius;
+
+                const { latitude, longitude } = coordinates.coords,
+                    phi = (90 - latitude) * (Math.PI / 180),
+                    theta = (longitude + 180) * (Math.PI / 180),
+                    earthRadius = this.earth.geometry.parameters.radius;
 
                 const surfacePosition = new THREE.Vector3(
                     -earthRadius * Math.sin(phi) * Math.cos(theta),
@@ -93,41 +94,40 @@ export class Earth {
                     })
                 );
 
-                const ringRadius = 0.12;
-                const ringThickness = 0.001;
-
                 this.userRing = new THREE.Mesh(
-                    new THREE.RingGeometry(ringRadius - ringThickness, ringRadius, 32),
+                    new THREE.RingGeometry(0, 1.9, 32),
                     new THREE.MeshBasicMaterial({
                         color: 0xdc2626,
                         side: THREE.DoubleSide,
+                        blending: THREE.AdditiveBlending ,
                         opacity: 0.5,
                         transparent: true,
                     })
                 );
 
-                this.user.position.copy(surfacePosition).add(new THREE.Vector3(0, userRadius, 0));
-                this.userRing.position.copy(surfacePosition).add(new THREE.Vector3(0, userRadius, 0));
-                // this.userRing.scale.set(1, 1, 1);
-                //
-                // new TWEEN.Tween(this.userRing.scale)
-                //     .to(new THREE.Vector3(1.2, 1.2, 1.2), 1000)
-                //     .easing(TWEEN.Easing.Quadratic.Out)
-                //     .yoyo(true) // Add yoyo effect for pulsation
-                //     .repeat(Infinity)
-                //     .start();
-                //
-                // new TWEEN.Tween(this.userRing.material)
-                //     .to({ opacity: 0 }, 1000)
-                //     .easing(TWEEN.Easing.Quadratic.Out)
-                //     .yoyo(true) // Add yoyo effect for pulsation
-                //     .repeat(Infinity)
-                //     .start();
+                this.userRing.scale.set(0.001, 0.001, 0.001);
 
+                this.user.lookAt(this.earth.position);
+
+                this.user.position.copy(surfacePosition).add(new THREE.Vector3(0, userRadius, 0));
+
+
+                new TWEEN.Tween(this.userRing.scale)
+                    .to(new THREE.Vector3(0.03, 0.03, 0.03))
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .repeat(Infinity)
+                    .start();
+
+                new TWEEN.Tween(this.userRing.material)
+                    .to({ opacity: 0 })
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .repeat(Infinity)
+                    .start();
+
+                this.user.add(this.userRing);
                 this.earth.add(this.user);
 
             });
-
 
     }
 
