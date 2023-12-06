@@ -82,7 +82,7 @@ export class Earth {
                     earthRadius * Math.sin(phi) * Math.sin(theta)
                 );
 
-                const userRadius = .007;
+                const userRadius = .0065;
 
                 this.user = new THREE.Mesh(
                     new THREE.SphereGeometry(userRadius, 32, 32),
@@ -106,24 +106,25 @@ export class Earth {
                     })
                 );
 
+                this.user.position.copy(surfacePosition).add(new THREE.Vector3(0, userRadius, 0));
                 this.userRing.position.copy(surfacePosition).add(new THREE.Vector3(0, userRadius, 0));
-                this.userRing.scale.set(1, 1, 1);
+                // this.userRing.scale.set(1, 1, 1);
+                //
+                // new TWEEN.Tween(this.userRing.scale)
+                //     .to(new THREE.Vector3(1.2, 1.2, 1.2), 1000)
+                //     .easing(TWEEN.Easing.Quadratic.Out)
+                //     .yoyo(true) // Add yoyo effect for pulsation
+                //     .repeat(Infinity)
+                //     .start();
+                //
+                // new TWEEN.Tween(this.userRing.material)
+                //     .to({ opacity: 0 }, 1000)
+                //     .easing(TWEEN.Easing.Quadratic.Out)
+                //     .yoyo(true) // Add yoyo effect for pulsation
+                //     .repeat(Infinity)
+                //     .start();
 
-                new TWEEN.Tween(this.userRing.scale)
-                    .to(new THREE.Vector3(1.2, 1.2, 1.2), 1000)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .yoyo(true) // Add yoyo effect for pulsation
-                    .repeat(Infinity)
-                    .start();
-
-                new TWEEN.Tween(this.userRing.material)
-                    .to({ opacity: 0 }, 1000)
-                    .easing(TWEEN.Easing.Quadratic.Out)
-                    .yoyo(true) // Add yoyo effect for pulsation
-                    .repeat(Infinity)
-                    .start();
-
-                this.earth.add(this.user, this.userRing);
+                this.earth.add(this.user);
 
             });
 
